@@ -47,4 +47,10 @@ class Payee:
         Checks the balance of SJCX on the passed address from CounterPartyChain.
         :return: int, Number of SJCX in the address.
         """
-        return int(self.get_addr_data()["data"][0]["amount"])
+        data = self.get_addr_data()
+        if data["success"] == 0:
+            return 0
+        for asset in data["data"]:
+            if asset["asset"] == "SJCX":
+                return int(float(asset["amount"]))
+        return 0

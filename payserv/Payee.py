@@ -1,8 +1,13 @@
+import json
+import urllib.request
+
+
 class Payee:
+
     def __init__(self, address):
         self.address = address
 
-    def is_valid_address(self, address):
+    def is_valid_address(self):
         """
         Does simple validation of a bitcoin-like address.
         Source: http://bit.ly/17OhFP5
@@ -17,12 +22,29 @@ class Payee:
 
         # We do not check the high length limit of the address.
         # Usually, it is 35, but nobody knows what could happen in the future.
-        if len(address) < 27:
+        if len(self.address) < 27:
             return False
-        elif address[0] not in chars_ok_first:
+        elif self.address[0] not in chars_ok_first:
             return False
 
         # We use the function "all" by passing it an enumerator as parameter.
         # It does a little optimization :
         # if one of the character is not valid, the next ones are not tested.
-        return all((char in chars_ok for char in address[1:]))
+        return all((char in chars_ok for char in self.address[1:]))
+
+    def get_addr_data(self):
+        """
+        Get the raw address data for the address from CounterPartyChain.
+        :return: json, Raw data from CounterPartyChain.
+        """
+        api_url = 'https://counterpartychain.io/api/balances/'
+        response = urllib.request.urlopen(api_url + self.address).read().decode("utf-8")
+        json_response = json.loads(response)
+        return json_response
+
+    def get_balance(self):
+        """
+        Checks the balance of SJCX on the passed address from CounterPartyChain.
+        :return: int, Number of SJCX in the address.
+        """
+        return int(self.get_addr_data()["data"][0]["amount"])

@@ -1,5 +1,12 @@
 import json
 import urllib.request
+from flask import Flask
+
+
+# Initialize the Flask application
+app = Flask(__name__)
+app.config['MIN_SJCX'] = 1000
+app.config['DATABASE'] = '/db/payserv.db'
 
 
 class Payee:
@@ -54,3 +61,12 @@ class Payee:
             if asset["asset"] == "SJCX":
                 return int(float(asset["amount"]))
         return 0
+
+    def to_db(self):
+        pass
+
+    def save(self):
+        if self.is_valid_address() or self.get_balance() == app.config['MIN_SJCX']:
+            self.to_db()
+            return True
+        return False

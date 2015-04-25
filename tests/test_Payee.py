@@ -1,4 +1,3 @@
-import json
 import unittest
 from payserv.Payee import Payee
 
@@ -27,7 +26,7 @@ class TestPayee(unittest.TestCase):
         self.assertEqual(json_response["data"][0]["asset"], 'SJCX')
         self.assertEqual(json_response["data"][0]["amount"], '1000.00000000')
 
-        invalid = {"success":0,"error":"Invalid address"}
+        invalid = {"success": 0, "error": "Invalid address"}
         self.assertEqual(payee2.get_addr_data(), invalid)
         self.assertEqual(payee3.get_addr_data(), invalid)
 

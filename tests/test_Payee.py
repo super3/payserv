@@ -14,7 +14,7 @@ class TestPayee(unittest.TestCase):
         self.assertFalse(Payee(in_addr2).is_valid_address())
 
     def test_addr_data(self):
-        addr1 = '14K1kmduk5q3aS8SmkFdHU8mufzr4whwWz'
+        addr1 = '14BV7KNzmpumQqpmfk3DJj6F9ZM9zRmu9A'
         addr2 = '1CmFuDcdvhShHB9QgcrXckJF4UEmMFbu7V'
         addr3 = "notavalidaddress"
 
@@ -24,18 +24,18 @@ class TestPayee(unittest.TestCase):
 
         json_response = payee1.get_addr_data()
         self.assertEqual(json_response["data"][0]["asset"], 'SJCX')
-        self.assertEqual(json_response["data"][0]["amount"], '1000.00000000')
+        self.assertEqual(json_response["data"][0]["amount"], '10.00000000')
 
         invalid = {"success": 0, "error": "Invalid address"}
         self.assertEqual(payee2.get_addr_data(), invalid)
         self.assertEqual(payee3.get_addr_data(), invalid)
 
     def test_addr_bal(self):
-        addr1 = '14K1kmduk5q3aS8SmkFdHU8mufzr4whwWz'
+        addr1 = '14BV7KNzmpumQqpmfk3DJj6F9ZM9zRmu9A'
         addr2 = '1CmFuDcdvhShHB9QgcrXckJF4UEmMFbu7V'
 
         payee1 = Payee(addr1)
         payee2 = Payee(addr2)
 
-        self.assertEqual(payee1.get_balance(), 1000)
+        self.assertEqual(payee1.get_balance(), 10)
         self.assertEqual(payee2.get_balance(), 0)

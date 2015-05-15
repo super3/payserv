@@ -8,4 +8,4 @@ we need to be able to pay users for their resources. This involves many small pa
 than a penny. We use payserv to keep track of all those small payments, and pay them out once they
 reach a reasonable amount. 
 
-tldr; We take lots of little payments, and make them into one big one.
+**tldr;** We take lots of little payments, and make them into one big one.
